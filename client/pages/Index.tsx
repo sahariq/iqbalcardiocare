@@ -14,6 +14,32 @@ import {
   Building2,
   BarChart2,
 } from "lucide-react";
+// Helper to get next working day (Mon-Fri), 5pm
+function getNextAvailableTime(now = new Date()) {
+  // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  let day = now.getDay();
+  let daysToAdd = 1;
+  if (day === 5) { // Friday
+    daysToAdd = 3;
+  } else if (day === 6) { // Saturday
+    daysToAdd = 2;
+  } else if (day === 0) { // Sunday
+    daysToAdd = 1;
+  }
+  // Next working day
+  const next = new Date(now);
+  next.setDate(now.getDate() + daysToAdd);
+  next.setHours(17, 0, 0, 0); // 5:00 PM
+  // Format: 5:00 PM Monday
+  const options = { weekday: 'long' };
+  const weekday = next.toLocaleDateString(undefined, options);
+  let hour = next.getHours();
+  const minute = next.getMinutes().toString().padStart(2, '0');
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12;
+  if (hour === 0) hour = 12;
+  return `${hour}:${minute} ${ampm} ${weekday}`;
+}
 import { Link } from "react-router-dom";
 
 import { BookingForm } from "@/components/site/booking-form";
@@ -72,8 +98,7 @@ export default function Index() {
                   Trusted cardiology care built around clarity, calm, and faster decisions.
                 </h1>
                 <p className="max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl">
-                  {clinicName} brings together preventive screening, modern diagnostics,
-                  and supportive follow-up in one polished clinic experience designed for patients and families.
+                  Iqbal Cardiocare Clinic brings together preventive screening, modern diagnostics, and supportive follow-up in one polished clinic experience designed for patients and families.
                 </p>
               </div>
 
@@ -83,7 +108,7 @@ export default function Index() {
                   size="lg"
                   className="bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600 text-white font-bold shadow-[0_0_6px_1px_rgba(59,130,246,0.3)] hover:from-blue-600 hover:to-blue-700 hover:shadow-[0_0_12px_2px_rgba(59,130,246,0.4)] transition"
                 >
-                  <Link to="/booking">Book Appointment</Link>
+                  <Link to="/#booking">Book Appointment</Link>
                 </Button>
               </div>
 
@@ -126,13 +151,13 @@ export default function Index() {
                       className="h-64 w-64 rounded-[2.5rem] object-cover border border-border/70 shadow-soft mb-6"
                     />
                     <h2 className="font-display text-2xl font-bold text-foreground mb-1">Prof. Dr. Mohammad Naeem Malik</h2>
-                    <p className="text-primary font-semibold mb-2">Professor &amp; Head of Cardiology, HBS Medical College, Islamabad</p>
+                    <p className="text-primary font-semibold mb-2">Professor & Head of Cardiology, HBS Medical College, Islamabad</p>
                     <div className="flex flex-wrap justify-center gap-2 my-4">
                       {/* Badges removed as requested */}
                     </div>
                     <div className="flex flex-col items-center gap-2">
                       <span className="inline-flex items-center gap-2 text-sm font-medium text-primary">
-                        <CalendarClock className="h-4 w-4" /> Next available: <span className="font-bold text-foreground">09:00 AM Monday</span>
+                        <CalendarClock className="h-4 w-4" /> Next available: <span className="font-bold text-foreground">{getNextAvailableTime()}</span>
                       </span>
                     </div>
                   </div>
@@ -192,21 +217,21 @@ export default function Index() {
             <div className="flex justify-center">
               <motion.article
                 {...fadeUp}
-                className="bg-white rounded-xl shadow-xl border border-blue-100 p-8 max-w-xl w-full flex flex-col items-center"
+                className="rounded-[2rem] border border-border/70 bg-background/85 p-8 shadow-panel flex flex-col items-center text-center max-w-xl w-full"
               >
                 <img
                   src="/cardic-slider-1.png"
                   alt="Cardiac care slider"
-                  className="h-52 w-52 rounded-2xl object-cover border-2 border-blue-200 shadow mb-4"
+                  className="h-52 w-52 rounded-[2.5rem] object-cover border border-border/70 shadow-soft mb-6"
                 />
                 <h3 className="font-display text-2xl font-bold text-foreground mb-1">Prof. Dr. Mohammad Naeem Malik</h3>
                 <p className="text-base font-medium text-muted-foreground mb-2">Professor &amp; Head of Cardiology<br/>HBS Medical College, Islamabad</p>
                 <hr className="my-4 w-full border-blue-100" />
                 <div className="w-full text-left mb-4">
-                  <h4 className="text-sm font-semibold text-blue-700 mb-1 flex items-center gap-2">
+                  <h4 className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-1 flex items-center gap-2">
                     <GraduationCap className="h-4 w-4" /> Credentials
                   </h4>
-                  <ul className="ml-4 list-disc text-sm text-blue-900 space-y-1">
+                  <ul className="ml-4 list-disc text-sm text-blue-900 dark:text-blue-100 space-y-1">
                     <li>MBBS</li>
                     <li>MD (Cardiology)</li>
                     <li>Diploma in Cardiology</li>
@@ -214,40 +239,17 @@ export default function Index() {
                   </ul>
                 </div>
                 <div className="w-full text-left mb-4">
-                  <h4 className="text-sm font-semibold text-blue-700 mb-1 flex items-center gap-2">
+                  <h4 className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-1 flex items-center gap-2">
                     <Building2 className="h-4 w-4" /> Experience
                   </h4>
-                  <ul className="ml-4 list-disc text-sm text-blue-900 space-y-1">
+                  <ul className="ml-4 list-disc text-sm text-blue-900 dark:text-blue-100 space-y-1">
                     <li>Former Executive Director, PIMS</li>
                     <li>Former Chairman, Cardiac Centre PIMS</li>
                     <li>35+ years in cardiology</li>
                   </ul>
                 </div>
-                <div className="w-full text-left mb-4">
-                  <h4 className="text-sm font-semibold text-blue-700 mb-1 flex items-center gap-2">
-                    <BarChart2 className="h-4 w-4" /> Key Achievements
-                  </h4>
-                  <div className="grid grid-cols-2 gap-3 mt-2">
-                    <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 flex flex-col items-center">
-                      <span className="text-2xl font-bold text-blue-900">50,000+</span>
-                      <span className="text-xs text-blue-700 mt-1">Procedures</span>
-                    </div>
-                    <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 flex flex-col items-center">
-                      <span className="text-2xl font-bold text-blue-900">100,000+</span>
-                      <span className="text-xs text-blue-700 mt-1">Patients Served</span>
-                    </div>
-                    <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 flex flex-col items-center">
-                      <span className="text-2xl font-bold text-blue-900">10,000+</span>
-                      <span className="text-xs text-blue-700 mt-1">Angiographies</span>
-                    </div>
-                    <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 flex flex-col items-center">
-                      <span className="text-2xl font-bold text-blue-900">5,000+</span>
-                      <span className="text-xs text-blue-700 mt-1">PCIs</span>
-                    </div>
-                  </div>
-                </div>
                 <div className="w-full mt-2">
-                  <div className="rounded-lg bg-blue-100 text-blue-900 px-4 py-2 text-center font-semibold text-sm border border-blue-300">
+                  <div className="rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 px-4 py-2 text-center font-semibold text-sm border border-blue-300 dark:border-blue-700">
                     Highest-volume cardiac practice in Pakistan
                   </div>
                 </div>
@@ -363,17 +365,14 @@ export default function Index() {
                       Easy-to-find heart care, designed for calm arrivals.
                     </h3>
                   </div>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-[1.5rem] bg-card/85 p-4 text-sm leading-7 text-muted-foreground">
-                      Reception and waiting areas are positioned to reduce stress and improve comfort during visits.
-                    </div>
+                  <div>
                     <div className="rounded-[1.5rem] overflow-hidden border border-card bg-card/85 flex flex-col items-center">
                       <iframe
                         title="Prof. Dr Mohammed Naeem Malik Clinic Map"
-                        src="https://www.google.com/maps?q=office+no.+10+First+floor,+Time+square+plaza,+Islamabad,+Pakistan&output=embed"
+                        src="https://www.google.com/maps?q=M3W2%2BJ6+Islamabad,+Pakistan&output=embed"
                         width="100%"
-                        height="200"
-                        style={{ border: 0 }}
+                        height="300"
+                        style={{ border: 0, borderRadius: '1rem' }}
                         allowFullScreen={true}
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
@@ -383,6 +382,7 @@ export default function Index() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mt-3 inline-block rounded-lg bg-primary px-4 py-2 text-white font-semibold shadow hover:bg-primary/90 transition"
+                        style={{ width: '100%', textAlign: 'center' }}
                       >
                         Open in Google Maps
                       </a>

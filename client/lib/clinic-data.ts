@@ -46,30 +46,29 @@ export const navItems: ClinicNavItem[] = [
   { label: "About", to: "/#about" },
   { label: "Services", to: "/#services" },
   { label: "Testimonials", to: "/#testimonials" },
+  { label: "Booking", to: "/#booking" },
   { label: "Contact", to: "/#contact" },
-  { label: "Booking", to: "/booking" },
 ];
-
 export const clinicStats: ClinicStat[] = [
   {
     value: "100,000+",
     label: "Patients Served",
-    detail: "Over 35-year career spanning multiple institutions."
+    detail: "Over 35-year career spanning multiple institutions"
   },
   {
     value: "50,000+",
     label: "Procedures Performed",
-    detail: "Angiographies, angioplasties, pacemaker implants."
+    detail: "Angiographies, angioplasties, pacemaker implants"
   },
   {
     value: "35+",
     label: "Years of Experience",
-    detail: "Since 1988 internship to present."
+    detail: "Since 1988 internship to present"
   },
   {
-    value: "Head & ED",
-    label: "PIMS (Retired)",
-    detail: "Former Head of Cardiac Centre & Executive Director, PIMS."
+    value: "Head & ED, PIMS (Retired)",
+    label: "Leadership",
+    detail: "Former Head of Cardiac Centre & Executive Director, PIMS"
   },
 ];
 
@@ -162,7 +161,7 @@ export const clinicHighlights: string[] = [
 
 export const contactDetails = {
   address: "Office No. 10, First Floor, Time Square Plaza, Islamabad, Pakistan",
-  phone: "+92 335 5411602",
+  phone: "92 335 5411602",
   email: "c7656414@gmail.com",
   hours: "Mon–Sat · 5:00 PM to 9:00 PM",
 };
